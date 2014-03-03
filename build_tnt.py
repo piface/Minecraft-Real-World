@@ -38,6 +38,7 @@ def activate_tnt(event):
     global tnt_activated
     tnt_activated = True
     mc.postToChat("TNT activated!")
+    event.chip.output_pins[7].turn_on()  # turn button light on
 
 
 def tnt_is_still_there():
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     pfd = pifacedigitalio.PiFaceDigital()
     pfd.output_port.all_off()
 
-    # air
+    # air -- clear a section
     mc.setBlocks(-20, 0, -20, 20, 20, 20, mcpi.block.AIR.id)
     # ground
     mc.setBlocks(-20, -20, -20, 20, 0, 20, mcpi.block.DIRT.id)
