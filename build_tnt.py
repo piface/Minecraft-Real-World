@@ -1,3 +1,23 @@
+"""
+Builds a bookcase and some TNT in a Minecraft world. Activate the
+TNT with PiFace Digital. When the TNT explodes relay 0 is turned on.
+Connect relay 0 to real life explosives!
+
+Copyright (C) 2014 Thomas Preston <thomas.preston@openlx.org.uk>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import time
 import mcpi.block
 import mcpi.minecraft
