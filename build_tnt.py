@@ -1,29 +1,14 @@
 import time
-import pifacedigitalio
 import mcpi.block
 import mcpi.minecraft
+import pifacedigitalio
 
 
 TNT_START_X, TNT_START_Y, TNT_START_Z = 0, 0, 0
 TNT_END_X, TNT_END_Y, TNT_END_Z = 3, 3, 3
 
 TNT_FUSE = 4
-RELAY_ON_TIME = 3
-
-
-# No longer required
-# def increment_hit_block_data(hit):
-#     block = mc.getBlockWithData(hit.pos.x, hit.pos.y, hit.pos.z)
-#     block.data = (block.data + 1) & 0xf
-#     mc.setBlock(hit.pos.x,
-#                 hit.pos.y,
-#                 hit.pos.z,
-#                 block.id,
-#                 block.data)
-#     mc.postToChat("Block(x={},y={},z={}) data is now {}".format(hit.pos.x,
-#                                                                 hit.pos.y,
-#                                                                 hit.pos.z,
-#                                                                 block.data))
+RELAY_ON_TIME = 5
 
 
 def activate_tnt(event):
@@ -34,7 +19,7 @@ def activate_tnt(event):
                  TNT_END_Y,
                  TNT_END_Z,
                  mcpi.block.TNT.id,
-                 1)
+                 1)  # sets data to 1 so that TNT explodes!
     global tnt_activated
     tnt_activated = True
     mc.postToChat("TNT activated!")
@@ -42,6 +27,7 @@ def activate_tnt(event):
 
 
 def tnt_is_still_there():
+    """Returns True is the TNT is still there, False otherwise."""
     for x in range(TNT_END_X):
         for y in range(TNT_END_Y):
             for z in range(TNT_END_Z):
@@ -61,13 +47,13 @@ if __name__ == '__main__':
     pfd = pifacedigitalio.PiFaceDigital()
     pfd.output_port.all_off()
 
-    # air -- clear a section
+    # air -- clear and area (coordinated are two corners of a cuboid)
     mc.setBlocks(-20, 0, -20, 20, 20, 20, mcpi.block.AIR.id)
     # ground
     mc.setBlocks(-20, -20, -20, 20, 0, 20, mcpi.block.DIRT.id)
-    # block
+    # build a BIG bookshelf!
     mc.setBlocks(0, 0, 0, 20, 20, 20, mcpi.block.BOOKSHELF.id)
-    # tnt
+    # TNT!!!!!!!
     mc.setBlocks(TNT_START_X,
                  TNT_START_Y,
                  TNT_START_Z,
@@ -90,9 +76,10 @@ if __name__ == '__main__':
             if tnt_activated and not tnt_is_still_there():
                 time.sleep(TNT_FUSE)
                 print "KA-BOOM!"
-                pfd.relays[0].turn_on()
+                pfd.relays[0].turn_on()  # EXPLOSION! KA-POW!
                 time.sleep(RELAY_ON_TIME)
                 pfd.relays[0].turn_off()
+                pfd.output_pins[7].turn_off()  # turn off the button light
                 break
             else:
                 time.sleep(0.1)
