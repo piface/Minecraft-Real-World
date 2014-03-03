@@ -7,4 +7,6 @@ Uses the [Minecraft Pi Edition](http://pi.minecraft.net/) Python API. Load up
 a world and run build TNT. Press input 0 on PiFace Digital to activate TNT,
 destroy the TNT in-game to turn on Relay 0 (which is connected to real TNT!).
 
+Place and run `build_tnt.py` in the `mcpi/api/python/` directory.
+
 Example video: http://youtu.be/n_3vt6RORb0
